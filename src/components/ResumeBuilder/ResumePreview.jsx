@@ -34,12 +34,25 @@ const ResumePreview = ({ data }) => {
 
         <hr className="mb-4" />
 
+
         {/* Contact */}
-        <div className="text-center text-xs text-gray-500 mb-6 space-x-3">
-          <span>{info.email}</span>
-          <span>{info.phone}</span>
-          <span>{info.location}</span>
+        <div className="text-center text-xs text-gray-500 mb-6 space-x-3 flex flex-wrap justify-center gap-2">
+          {info.email && <span>{info.email}</span>}
+          {info.phone && <span>{info.phone}</span>}
+          {info.location && <span>{info.location}</span>}
+{info.linkedin && (
+            <a href={info.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline" style={{ color: '#3B82F6' }}>
+              🔗 {info.linkedin.replace(/^https?:\/\//, '').replace(/^www\./, '')}
+            </a>
+          )}
+          {info.website && (
+            <a href={info.website} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline" style={{ color: '#3B82F6' }}>
+              🔗 {info.website.replace(/^https?:\/\//, '').replace(/^www\./, '')}
+            </a>
+          )}
+
         </div>
+
 
         {/* Summary */}
         {data.professional_summary && (
@@ -91,8 +104,36 @@ const ResumePreview = ({ data }) => {
           </div>
         )}
 
+
+        {/* Projects */}
+        {data.project?.length > 0 && (
+          <div className="mb-5">
+            <h2 className="text-xs font-bold mb-1" style={{ color: accent }}>Projects</h2>
+            <hr style={{ borderColor: accent }} className="mb-2" />
+            {data.project.map((proj, i) => (
+              <div key={i} className="mb-4 pb-3 border-b border-gray-100 last:border-b-0">
+                <p className="text-xs font-semibold mb-1">{proj.name}</p>
+                {proj.tech && <p className="text-xs text-gray-500 mb-2">{proj.tech}</p>}
+                {proj.link && (
+                  <a 
+                    href={proj.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-xs text-blue-600 hover:underline block mb-2 font-medium"
+                    style={{ color: '#3B82F6' }}
+                  >
+                    🔗 {proj.link.replace(/^https?:\/\//, '').replace(/^www\./, '')}
+                  </a>
+                )}
+                {proj.description && <p className="text-xs text-gray-700">{proj.description}</p>}
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Skills */}
         {data.skills?.length > 0 && (
+
           <div>
             <h2 className="text-xs font-bold mb-1" style={{ color: accent }}>Skills</h2>
             <hr style={{ borderColor: accent }} className="mb-2" />
